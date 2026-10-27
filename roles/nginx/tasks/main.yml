@@ -1,0 +1,19 @@
+---
+- name: install Nginx
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+    update_cache: true
+
+- name: Ensure nginx is enabled and running
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Configure Nginx to serve the Ansible website
+  ansible.builtin.replace:
+    path: /etc/nginx/nginx.conf
+    regexp: 'root\s+/usr/share/nginx/html;'
+    replace: 'root /var/www/html;'
+  notify: Restart Nginx

@@ -1,0 +1,44 @@
+---
+- name: Upgrade package cache
+  ansible.builtin.dnf:
+    update_cache: true
+
+- name: Install EPEL repository for RHEL 10
+  ansible.builtin.dnf:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
+    state: present
+    disable_gpg_check: true
+
+
+- name: Upgrade installed packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+
+- name: Ensure EPEL repository is installed
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present
+
+- name: Install basic utilities
+  ansible.builtin.dnf:
+    name:
+      - curl
+      - wget
+      - git
+      - unzip
+      - tar
+      - vim-enhanced
+      - ca-certificates
+    state: present
+
+- name: Install Fail2ban
+  ansible.builtin.dnf:
+    name: fail2ban
+    state: present
+
+- name: Enable and start Fail2ban
+  ansible.builtin.service:
+    name: fail2ban
+    state: started
+    enabled: true

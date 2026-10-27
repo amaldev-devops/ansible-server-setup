@@ -1,0 +1,6 @@
+---
+- name: Ensure the Ubuntu user's SSH public key is authorized
+  ansible.posix.authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', role_path + '/files/authorized_key.pub') }}"

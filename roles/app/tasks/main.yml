@@ -1,0 +1,16 @@
+---
+- name: Ensure document root exists
+  ansible.builtin.file:
+    path: /var/www/html
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: "0755"
+
+- name: upload and extract static website
+  ansible.builtin.unarchive:
+    src: website.tar.gz
+    dest: /var/www/html
+    owner: nginx
+    group: nginx
+    remote_src: false

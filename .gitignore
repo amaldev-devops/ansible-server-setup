@@ -1,0 +1,5 @@
+inventory.ini
+*.pem
+*.key
+ansible.log
+
